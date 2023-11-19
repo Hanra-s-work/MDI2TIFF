@@ -6,6 +6,13 @@ __pycache__/
 # C extensions
 *.so
 
+# Igrnoed folders
+wenv
+lenv
+menv
+venv
+.env
+
 # Distribution / packaging
 .Python
 build/
