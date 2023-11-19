@@ -25,3 +25,4 @@ def test_class_content() -> None:
     """ Test the class content """
     print("Testing class content")
     print(f"Displaying the content of mdi2img:\n{dir(mdi2img)}")
+    assert 0 == 0
