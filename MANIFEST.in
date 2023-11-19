@@ -1,0 +1,5 @@
+include mdi2img/bin/MDI2TIF.EXE
+include mdi2img/bin/MDTFCORE.DLL
+include mdi2img/bin/MDTFINK.DLL
+include mdi2img/bin/MSPTLS.DLL
+include mdi2img/bin/RICHED20.DLL

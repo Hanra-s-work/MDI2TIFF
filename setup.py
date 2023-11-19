@@ -11,6 +11,14 @@ setuptools.setup(
     name='mdi2img',
     version='1.0.0',
     packages=setuptools.find_packages(),
+    include_package_data=True,
+    package_data={
+        "mdi2img": ['bin/*'],
+    },
+    # data_files=[
+    #     ("bin", ['MDI2TIF.EXE', 'MDTFCORE.DLL',
+    #      'MDTFINK.DLL', 'MSPTLS.DLL', 'RICHED20.DLL'])
+    # ],
     install_requires=[
         "window-asset-tkinter==1.0.0"
     ],
