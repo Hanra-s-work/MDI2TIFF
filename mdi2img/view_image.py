@@ -26,11 +26,5 @@ class ViewImage(WA):
         if os.path.exists(image_path) is False:
             return False
         root = tk.Tk()
-        root.title("MDI2IMG")
-        root.geometry("800x600")
-        root.resizable(False, False)
-        image = tk.PhotoImage(file=image_path)
-        label = tk.Label(root, image=image)
-        label.pack()
-        root.mainloop()
+        self.window_tools.init_window()
         return True

@@ -12,6 +12,7 @@ lenv
 menv
 venv
 .env
+.vscode
 
 # Distribution / packaging
 .Python
