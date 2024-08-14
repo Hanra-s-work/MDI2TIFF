@@ -2,5 +2,5 @@ build ==1.2.1
 flake8 ==7.1.1
 pytest ==8.3.2
 wheel ==0.44.0
-setuptools == 72.3.0
+setuptools == 72.2.0
 window-asset-tkinter ==1.0.3
