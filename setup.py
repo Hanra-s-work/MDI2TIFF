@@ -20,7 +20,7 @@ setuptools.setup(
     #      'MDTFINK.DLL', 'MSPTLS.DLL', 'RICHED20.DLL'])
     # ],
     install_requires=[
-        "window-asset-tkinter==1.0.0"
+        "window-asset-tkinter==1.0.3"
     ],
     author="Henry Letellier",
     author_email="henrysoftwarehouse@protonmail.com",
