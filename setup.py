@@ -12,7 +12,7 @@ setuptools.setup(
     version='1.0.0',
     packages=setuptools.find_packages(),
     install_requires=[
-        "window-asset-tkinter==1.0.3"
+        "window-asset-tkinter==1.0.5"
     ],
     include_package_data=True,
     package_data={
