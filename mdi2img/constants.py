@@ -7,11 +7,15 @@
 
 import os
 from typing import Union
-import display_tty as DTY
+from display_tty import Disp, TOML_CONF
 
 SUCCESS = 0
 ERROR = 1
 ERR = ERROR
+TMP_IMG_FOLDER = "%TEMP%/mdi_to_img_temp"
+
+__version__ = "1.0.0"
+__author__ = "(c) Henry Letellier"
 
 
 class Constants:
@@ -19,21 +23,25 @@ class Constants:
     This is the class that will store general methods and variables that will be used over different classes.
     """
 
-    def __init__(self, binary_name: str = "MDI2TIF.EXE") -> None:
+    def __init__(self, binary_name: str = "MDI2TIF.EXE", output_format: str = "default") -> None:
         self.env = os.environ
+        self.author = __author__
+        self.debug = False
         self.binary_name = binary_name
         self.in_directory = f"{os.getcwd()}/in"
         self.out_directory = f"{os.getcwd()}/out"
-        self.dttyi = DTY.Disp(
-            toml_content=DTY.TOML_CONF,
+        self.out_format = output_format
+        self.dttyi = Disp(
+            toml_content=TOML_CONF,
             save_to_file=False,
             file_name="",
             file_descriptor=None,
-            debug=False,
+            debug=self.debug,
             logger=None
         )
         self.temporary_folder = self._get_temp_folder(self.env)
         self.temporary_img_folder = f"{self.temporary_folder}/mdi_to_img_temp"
+        self.log_file_location = f"{self.temporary_folder}/mdi2tiff.log"
         self._create_temp_if_not_present()
         self.binary_path = self._find_mdi2tiff_binary(self.binary_name)
 
@@ -125,6 +133,16 @@ class Constants:
             string (str, optional): _description_. Defaults to "".
         """
         self.dttyi.logger.info("(mdi2img) %s", string)
+
+    def pdebug(self, string: str = "") -> None:
+        """_summary_
+        This is a function that will output a debug message on the terminal.
+
+        Args:
+            string (str, optional): _description_. Defaults to "".
+        """
+        if self.debug is True:
+            self.dttyi.logger.debug("(mdi2img) %s", string)
 
     def err_item_not_found(self, directory: bool = True,  item_type: str = "input", path: str = '', critical: bool = False, additional_text: str = "") -> None:
         """_summary_
