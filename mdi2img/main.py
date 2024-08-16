@@ -18,9 +18,10 @@ class Main:
     This is the main class of the program
     """
 
-    def __init__(self, success: int = CONST.SUCCESS, error: int = CONST.ERROR, show: bool = True, debug: bool = False) -> None:
+    def __init__(self, success: int = CONST.SUCCESS, error: int = CONST.ERROR, show: bool = True, debug: bool = False, splash: bool = True) -> None:
         self.argv = argv[1:]
         self.argc = len(self.argv)
+        self._display_splash_screen(splash)
         self.success = success
         self.error = error
         self.binary_name = ""
@@ -41,6 +42,22 @@ class Main:
             self.success,
             self.error
         )
+
+    def _display_splash_screen(self, display: bool = True) -> None:
+        """_summary_
+            This is the function that will display the splash screen if authorised to.
+
+        Args:
+            display (bool, optional): _description_: The boolean variable that controls the display of the splash screen. Defaults to True.
+        """
+        if display is True:
+            if isinstance(CONST.SPLASH, list):
+                for i in CONST.SPLASH:
+                    print(i)
+            else:
+                print(CONST.SPLASH)
+            print(f"Splash name: '{CONST.SPLASH_NAME}'")
+        print("Welcome to Mdi2Img")
 
     def _check_output_format(self, output: str) -> str:
         """_summary_

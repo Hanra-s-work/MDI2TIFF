@@ -7,12 +7,18 @@
 
 import os
 from typing import Union
+from random import randint
 from display_tty import Disp, TOML_CONF
+from . import logo as LOG
 
 SUCCESS = 0
 ERROR = 1
 ERR = ERROR
 TMP_IMG_FOLDER = "%TEMP%/mdi_to_img_temp"
+
+SELECTED_LIST = LOG.__logo_ascii_art__
+SPLASH_NAME = list(SELECTED_LIST)[randint(0, len(SELECTED_LIST) - 1)]
+SPLASH = SELECTED_LIST[SPLASH_NAME]
 
 __version__ = "1.0.0"
 __author__ = "(c) Henry Letellier"
