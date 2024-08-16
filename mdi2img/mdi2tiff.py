@@ -4,8 +4,9 @@ This extension relies on the windows mdi2tiff program
 """
 
 import os
-from typing import Union
+from typing import Union, List
 from . import constants as CONST
+from .change_image_format import ChangeImageFormat
 
 
 class MDIToTiff:
@@ -34,6 +35,13 @@ class MDIToTiff:
         self.total_files_fails = 0
         self.global_status = self.success
         # -------------------- End Folder conversion stats ---------------------
+        # ----------------------- Begin image conversion -----------------------
+        self.cifi = ChangeImageFormat(
+            constants=self.const,
+            success=self.success,
+            error=self.error
+        )
+        # ----------------------(- End image conversion -----(------------------
 
     def _reset_folder_conversion_stats_session(self) -> None:
         """_summary_
@@ -48,12 +56,12 @@ class MDIToTiff:
         self.total_files_skipped = 0
         self.total_files_success = 0
 
-    def _initialise_folder_conversion_stat_session(self, folder_content: list[str]) -> None:
+    def _initialise_folder_conversion_stat_session(self, folder_content: List[str]) -> None:
         """_summary_
         Set the variables that can be set based on the contents of the folder
 
         Args:
-            folder_content (list[str]): _description_: A list of the content of the input folder.
+            folder_content (List[str]): _description_: A list of the content of the input folder.
         """
         self._reset_folder_conversion_stats_session()
         self.total_items = len(folder_content)
@@ -95,13 +103,40 @@ class MDIToTiff:
         else:
             self.const.perror("Some files could not be converted.")
 
-    def convert(self, input_file: str, output_file: str) -> int:
+    def _run_conversion_steps(self, input_file: str, output_file: str, image_format: str) -> int:
+        """_summary_
+        This function is the one that will run the different conversion steps that are required in order to achieve the desired format.
+
+        Args:
+            input_file (str): _description_: The path to the input file.
+            output_file (str): _description_: The path to the output file.
+            image_format (str): _description_: The destination format of the image.
+
+        Returns:
+            int: _description_: The status of the execution.
+        """
+        if isinstance(output_file, list) is True:
+            step1 = output_file[0]
+            step2 = output_file[1]
+        else:
+            step1 = output_file
+            step2 = None
+        command = f"{self.bin_path} -source {input_file} -dest {step1} "
+        command += f"-log {self.const.log_file_location}"
+        exit_code = os.system(command)
+        if exit_code != self.success:
+            return exit_code
+        if step2 is not None:
+            return self.cifi.to_desired_format(step1, step2, image_format)
+        return exit_code
+
+    def convert(self, input_file: str, output_file: Union[str, List[str]], img_format: str) -> int:
         """_summary_
         Convert an mdi file to a tiff file
 
         Args:
             input_file (str): _description_: The mdi file to convert
-            output_file (str): _description_: The tiff file to create
+            output_file (Union[str, List[str, str]]): _description_: The tiff file to create
 
         Returns:
             int: _description_: The status of the convertion (success:int  or error:int)
@@ -122,8 +157,15 @@ class MDIToTiff:
             if self.session_active is True:
                 return self.skipped
             return self.success
-        command = f"{self.bin_path} {input_file} {output_file}"
-        exit_code = os.system(command)
+        checked_output_file = self.cifi._check_output_file(
+            output_file,
+            img_format
+        )
+        exit_code = self._run_conversion_steps(
+            input_file,
+            checked_output_file,
+            img_format
+        )
         if exit_code == self.success:
             if self.session_active is False:
                 msg = f"{input_file} -> {output_file}: ok"
@@ -131,7 +173,7 @@ class MDIToTiff:
             return exit_code
         return self.error
 
-    def convert_all(self, input_directory: str = "", output_directory: str = "") -> int:
+    def convert_all(self, input_directory: str = "", output_directory: str = "", img_format: str = "") -> int:
         """_summary_
         Convert all mdi files in a directory to tiff files
 
@@ -183,7 +225,7 @@ class MDIToTiff:
                 self.const.pinfo(
                     f"Converting '{input_file}' to '{output_file}'"
                 )
-                status = self.convert(input_file, output_file)
+                status = self.convert(input_file, output_file, img_format)
                 self._update_folder_conversion_stat_session(status)
                 if status == self.success:
                     msg = f"File '{input_file}' has been converted to "
