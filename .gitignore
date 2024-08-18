@@ -169,10 +169,13 @@ cython_debug/
 #.idea/
 
 # Ignored due to large size
-sample_images/tiff/alex-moliski-A-IckZqMl7Q-unsplash.tiff #removed
-sample_images/tiff/alex-moliski-I31gl8xgHE-unsplash.tiff #removed
-sample_images/tiff/annie-spratt-W804HfdLt6UVPc-unsplash.tiff #?
-sample_images/tiff/max-bohme-RTQVBdwtsoE-uhI8-unsplash.tiff #removed
-sample_images/tiff/oo-verthing-bBijj18xJFg-unsplash.tiff #removed
+sample_images/tiff/alex-moliski-A-IckZqMl7Q-unsplash.tiff
+sample_images/tiff/alex-moliski-I31gl8xgHEI-unsplash.tiff
+sample_images/tiff/annie-spratt-W804HfdLt6I-unsplash.tiff
+sample_images/tiff/annie-spratt-W804HfdLt6UVPc-unsplash.tiff
+sample_images/tiff/max-bohme-RTQVBdwtsoE-unsplash.tiff
+sample_images/tiff/max-bohme-RTQVBdwtsoE-uhI8-unsplash.tiff
+sample_images/tiff/nora-long-rJa7BXhrcic-unsplash.tiff
+sample_images/tiff/oo-verthing-bBijj18xJFg-unsplash.tiff
+sample_images/tiff/oo-verthing-ubD141zXa7I-unsplash.tiff
 sample_images/tiff/oo-verthing-ubD141zXa7IQ-unsplash.tiff #removed?
-sample_images/tiff/nora-long-rJa7BXhrcic-unsplash.tiff #removed
