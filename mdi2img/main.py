@@ -145,10 +145,10 @@ class Main:
         if self.argc == 0:
             self._help_section()
             sys.exit(self.error)
-        if self.argv[0].lower() in ("-h", "--help"):
+        if self.argv[0].lower() in ("-h", "--help", "/?"):
             self._help_section()
             sys.exit(self.success)
-        if self.argv[0].lower() in ("-v", "--version"):
+        if self.argv[0].lower() in ("-v", "--version", "/v"):
             self._disp_version()
             sys.exit(self.success)
         for i in self.argv:
@@ -168,15 +168,16 @@ class Main:
                     f"{i}"
                 )
                 continue
-            if arg in ("--debug", "-d"):
+            if arg in ("--debug", "-d", "/d"):
                 self.debug = True
                 continue
-            if arg in ("--no-show", "-ns"):
+            if arg in ("--no-show", "-ns", "/ns"):
                 self.show = True
                 continue
             if arg.startswith("--format"):
                 self.output_format = self._check_output_format(
-                    arg.split("=")[1])
+                    arg.split("=")[1]
+                )
         if src_found is False:
             IDISP.logger.critical(
                 "(mdi2img) No source path provided, aborting!"
