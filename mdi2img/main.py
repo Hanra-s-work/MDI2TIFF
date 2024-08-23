@@ -37,7 +37,7 @@ class Main:
         if self.dest_found is False:
             self.dest = self.const.temporary_img_folder
         self.const.debug = self.debug
-        self.mdi_to_tiff_initialised = MDIToTiff(
+        self.mdi_to_tiff_initialised: MDIToTiff = MDIToTiff(
             self.const,
             self.success,
             self.error
@@ -191,4 +191,35 @@ class Main:
         Returns:
             int: _description_: The return status of the call
         """
-        return self.success
+        if self.debug is True:
+            for i in [
+                ("self.src", self.src),
+                ("self.dest", self.dest),
+                ("self.dest_found", self.dest_found),
+                ("self.debug", self.debug),
+                ("self.show", self.show),
+                ("self.output_format", self.output_format)
+            ]:
+                self.const.pdebug(f"(main) Variable '{i[0]}' = '{i[1]}'")
+        if os.path.isdir(self.src) is True:
+            self.const.pdebug("(main) The provided source path is a folder.")
+            return self.mdi_to_tiff_initialised.convert_all(
+                self.src,
+                self.dest,
+                self.output_format
+            )
+        if os.path.isfile(self.src) is True:
+            self.const.pdebug("(main) The provided source path is a file")
+            return self.mdi_to_tiff_initialised.convert(
+                self.src,
+                self.dest,
+                self.output_format
+            )
+        self.const.pdebug(
+            "(main) The provided path does npt correspond to a known type."
+        )
+        IDISP.logger.critical(
+            "(mdi2img) The source path '%s' does not exist or is neither a folder or a file\nAborting!",
+            f"{self.src}"
+        )
+        return self.error
