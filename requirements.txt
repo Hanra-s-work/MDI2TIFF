@@ -4,5 +4,5 @@ pillow == 10.4.0
 pytest ==8.3.2
 wheel ==0.44.0
 display-tty == 1.1.5
-setuptools == 72.2.0
+setuptools ==74.0.0
 window-asset-tkinter >=1.0.5
