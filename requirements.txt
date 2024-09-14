@@ -3,6 +3,6 @@ flake8 ==7.1.1
 pillow == 10.4.0
 pytest ==8.3.2
 wheel ==0.44.0
-display-tty == 1.1.5
+display-tty ==1.1.7
 setuptools ==74.1.2
 window-asset-tkinter >=1.0.5
